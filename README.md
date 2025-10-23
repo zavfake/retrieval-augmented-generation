@@ -4,6 +4,7 @@ Part I: Prepare Serverless Columnar Database
 Video: https://ptorbitventurainodnesia-my.sharepoint.com/:v:/g/personal/cloud6_orbitfutureacademy_sch_id/EXAWlA0Rm7NDkn3CcDwuFdsBVPa1hqWAB0NgzScJa1xxxw?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=NW4Uov
 
 Steps:
+
 1. Buat file CSV menggunakan spreadsheet. Sample data ada disini: https://docs.google.com/spreadsheets/d/1ukozLJjD__D1_oRJ81m9klYLqVMxuCu-KR8dlqRuFPc/edit?usp=sharing
 2. Convert format CSV ke Parquet. Format parquet akan membuat data yang besar terkompresi menjadi 10x lipat lebih kecil dibanding format CSV.
 
@@ -26,33 +27,32 @@ Steps:
    b. Kembali ke editor via tab, lalu pilih database yang baru dibuat tadi, dan coba query sederhana seperti "SELECT * FROM nama_table" di tabel yang tersedia.
    c. Pastika query berhasil memanggil data parquet dengan lancar.
 
-
 Part II: Integrate Bedrock with Athena using Lambda Function to Perform RAG
 Video: https://ptorbitventurainodnesia-my.sharepoint.com/:v:/g/personal/instructor3_orbitfutureacademy_sch_id/EYqHqukHaxBHi3LO0aX0qMABRi4jqx4-q8QHf-rwbFvHHw?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=ILxKk3
 
 Steps:
+
 1. Pastikan query menggunakan athena sudah berhasil
 2. Buat lambda:
-  a. Masukkan kode lambda_function.py -> test dengan lambda_invoke_test.json
-  b. Jika ada error permission untuk mengeksekusi Athena query, modifikasi IAM role dari lambda, attach policy: AmazonAthenaFullAccess, AmazonS3FullAccess, AWSGlueConsoleFullAccess
-  c. Pastikan function invocation berjalan normal sampai lambda dapat menampilkan hasil query athena.
+   a. Masukkan kode lambda_function.py -> test dengan lambda_invoke_test.json
+   b. Jika ada error permission untuk mengeksekusi Athena query, modifikasi IAM role dari lambda, attach policy: AmazonAthenaFullAccess, AmazonS3FullAccess, AWSGlueConsoleFullAccess
+   c. Pastikan function invocation berjalan normal sampai lambda dapat menampilkan hasil query athena.
 3. Masuk ke bedrock -> agent
-  a. Buat bedrock agent. Isikan nama, model: aws APAC novalite, masukkan instruction bedrock_agent_instruction.
-  b. Klik save, prepare dan lakukan interaksi dengan model. Pastikan model dapat melakukan perkenalan diri dan basic natural converstation.
-  c. Buat action group
-  d. Isi nama, define with API schemas
-  e. Select existing lambda function, pilih lambda function yg dibuat di step 2, Define via in-line schema editor isikan bedrock_inline_openapi_schema.json ke text editor.
-  f. save, prepare dan coba tanya menu. pasti error permission.
-
+   a. Buat bedrock agent. Isikan nama, model: aws APAC novalite, masukkan instruction bedrock_agent_instruction.
+   b. Klik save, prepare dan lakukan interaksi dengan model. Pastikan model dapat melakukan perkenalan diri dan basic natural converstation.
+   c. Buat action group
+   d. Isi nama, define with API schemas
+   e. Select existing lambda function, pilih lambda function yg dibuat di step 2, Define via in-line schema editor isikan bedrock_inline_openapi_schema.json ke text editor.
+   f. save, prepare dan coba tanya menu. pasti error permission.
 4. Finalisasi permission
    a. Buka IAM -> role. Cari role yang namanya sama dengan iam di Agent resource role di bedrock Agent builder.
    Pastikan role tersebut memiliki: "bedrock:InvokeModel", "bedrock:InvokeModelWithResponseStream", "bedrock:GetInferenceProfile" "bedrock:GetFoundationModel". Jangan lupa pilih any resource in this account untuk menyimpan.
    b. Buka lambda -> pilih lambda yang dibuat di step 2 -> configuration -> permission -> Resource-based policy statements. Add permission.
    Isi Name: mirip dengan agent, Principal: bedrock.amazonaws.com, effect: Allow, Action: lambda:InvokeFunction
-
-4. Balik ke agent, prepare, test lagi. Jika sudah bisa buat alis dan agent siap digunakan!
-
-
+5. Balik ke agent, prepare, test lagi. Jika sudah bisa buat alis dan agent siap digunakan!
 
 Part III: Using Bedrock Agent as an API Services
-Mau lanjut ga? jika iya request di group ya guys! Jika banyak yg butuh saya lanjut
+
+```
+Mau lanjut ga? jika iya request di group ya guys! Jika banyak yg butuh saya lanjut 😁
+```
