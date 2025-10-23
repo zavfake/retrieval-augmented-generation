@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Membuat pelayan cafe berbasis LLM menggunakan teknik RAG
 
 
@@ -46,3 +47,7 @@ Part II: Integrate Bedrock with Athena using Lambda Function to Perform RAG
 
 Part III: Using Bedrock Agent as an API Services
 ...
+=======
+# retrieval-augmented-generation
+Bedrock + Lambda + Athena + Glue for RAG
+>>>>>>> 058bc8a299e1ddf4c0298e5c19131b2a51c66e8a
