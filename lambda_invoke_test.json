@@ -1,0 +1,20 @@
+{
+    "agent":"Cek agent",
+    "actionGroup": "Cek AG",
+    "apiPath": "/",
+    "requestBody": {
+            "content":{
+                "application/json":{
+                    "properties":[
+                            {
+                                "key":"Query",
+                                "value": "SELECT * FROM cafe_intelligence_system;"
+                            }
+                        ]
+                }
+            }
+    },
+    "httpMethod":"GET",
+    "sessionAttributes":"testsession",
+    "promptSessionAttributes":"testsession"
+}

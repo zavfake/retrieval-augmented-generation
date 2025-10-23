@@ -1,0 +1,70 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Cafe Menu Query API",
+    "version": "1.0.0",
+    "description": "APIs for querying cafe menu data stored in Athena through Lambda."
+  },
+  "paths": {
+    "/menu/query": {
+      "post": {
+        "summary": "Run a custom SQL query on the cafe menu table",
+        "description": "Execute a SQL query against the Athena cafe menu database. Columns available: menu_name, category, price, special_price, type.",
+        "operationId": "queryCafeMenu",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "description": "SQL query string to execute. Example: SELECT * FROM cafe_intelligence_system WHERE type='Drink' LIMIT 5;"
+                  }
+                },
+                "required": ["query"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Query executed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Execution status, usually 'success' or 'error'"
+                    },
+                    "columns":{
+                      "type": "string",
+                      "description": "The available of columns data. This affect how query will be formed"
+                    },
+                    "agent_event_debug":{
+                      "type": "string",
+                      "description": "The addtional data for param debug"
+                    },
+                    "rows": {
+                      "type": "string",
+                      "description": "List of rows returned by the query"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid SQL query or bad request"
+          },
+          "500": {
+            "description": "Athena execution failed"
+          }
+        }
+      }
+    }
+  }
+}
